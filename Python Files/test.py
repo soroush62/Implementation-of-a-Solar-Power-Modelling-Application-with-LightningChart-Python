@@ -8,3 +8,8 @@ weather_data['DATE_TIME'] = pd.to_datetime(weather_data['DATE_TIME'])
 
 print(generation_data.head())
 print(weather_data.head())
+
+merged_data = pd.merge(generation_data, weather_data, on=['DATE_TIME', 'PLANT_ID'])
+
+print(merged_data.head())
+
