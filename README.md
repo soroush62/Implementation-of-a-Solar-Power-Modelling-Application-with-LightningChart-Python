@@ -1,0 +1,1 @@
+# Implementation-of-a-Solar-Power-Modelling-Application-with-LightningChart-Python
