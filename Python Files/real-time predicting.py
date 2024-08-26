@@ -30,24 +30,30 @@ dashboard = lc.Dashboard(theme=lc.Themes.Dark, rows=2, columns=2)
 ambient_gauge = dashboard.GaugeChart(row_index=0, column_index=0)
 ambient_gauge.set_title('Ambient Temperature')
 ambient_gauge.set_angle_interval(start=225, end=-45)
-ambient_gauge.set_thickness(100)
-
-ambient_gauge.set_lookup_table_min_max(
-    min_value=0, max_value=50,
-    min_color=lc.Color(255, 255, 0),  
-    max_color=lc.Color(255, 0, 0)   
-)
+ambient_gauge.set_interval(start=0, end=50)
+ambient_gauge.set_value_indicators([
+    {'start': 0, 'end': 10, 'color': lc.Color(0, 0, 255)},  # Blue
+    {'start': 10, 'end': 20, 'color': lc.Color(0, 255, 255)},  # Cyan
+    {'start': 20, 'end': 30, 'color': lc.Color(0, 255, 0)},  # Green
+    {'start': 30, 'end': 40, 'color': lc.Color(255, 255, 0)},  # Yellow
+    {'start': 40, 'end': 50, 'color': lc.Color(255, 0, 0)}  # Red
+])
+ambient_gauge.set_bar_thickness(100)
+ambient_gauge.set_value_indicator_thickness(20)
 
 module_gauge = dashboard.GaugeChart(row_index=0, column_index=1)
-module_gauge.set_title('Module Temperature')
+module_gauge.set_title('Ambient Temperature')
 module_gauge.set_angle_interval(start=225, end=-45)
-module_gauge.set_thickness(100)
-
-module_gauge.set_lookup_table_min_max(
-    min_value=0, max_value=100,
-    min_color=lc.Color(255, 255, 0),  
-    max_color=lc.Color(255, 0, 0)   
-)
+module_gauge.set_interval(start=0, end=50)
+module_gauge.set_value_indicators([
+    {'start': 0, 'end': 10, 'color': lc.Color(0, 0, 255)},  # Blue
+    {'start': 10, 'end': 20, 'color': lc.Color(0, 255, 255)},  # Cyan
+    {'start': 20, 'end': 30, 'color': lc.Color(0, 255, 0)},  # Green
+    {'start': 30, 'end': 40, 'color': lc.Color(255, 255, 0)},  # Yellow
+    {'start': 40, 'end': 50, 'color': lc.Color(255, 0, 0)}  # Red
+])
+module_gauge.set_bar_thickness(100)
+module_gauge.set_value_indicator_thickness(20)
 
 power_chart = dashboard.ChartXY(row_index=1, column_index=0, column_span=2, title='Predicted AC Power Over Time')
 line_series = power_chart.add_line_series().set_name('Predicted AC Power')
@@ -86,3 +92,5 @@ def update_dashboard():
 
 dashboard.open(live=True)
 update_dashboard()
+
+
