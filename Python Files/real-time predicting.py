@@ -42,7 +42,7 @@ ambient_gauge.set_bar_thickness(100)
 ambient_gauge.set_value_indicator_thickness(20)
 
 module_gauge = dashboard.GaugeChart(row_index=0, column_index=1)
-module_gauge.set_title('Ambient Temperature')
+module_gauge.set_title('Module Temperature')
 module_gauge.set_angle_interval(start=225, end=-45)
 module_gauge.set_interval(start=0, end=50)
 module_gauge.set_value_indicators([
