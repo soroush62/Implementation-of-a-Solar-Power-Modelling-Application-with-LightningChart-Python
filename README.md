@@ -53,6 +53,9 @@ Ensure you have Python installed on your system. The following libraries are ess
 - **XGBoost, LightGBM, CatBoost**: Advanced machine learning algorithms.
 - **Scikit-learn**: Implementing machine learning models.
 - **Scipy**: Statistical functions like density estimation.
+- **Scikit-learn**: Implementing machine learning models.
+- **pvlib**: Provides tools for simulating and modeling photovoltaic (PV) energy systems, including solar position, irradiance, and power output calculations.
+- **time**: A Python standard library for handling time-related tasks.
 
 ### Setting Up Your Development Environment
 
@@ -211,6 +214,40 @@ def create_3d_surface_chart(merged_data):
 Insights include:
 •	3D Surface Plot shows the combined effect of module and ambient temperatures on daily yield, with clear peaks where optimal conditions are met.
 •	3D Scatter Plot uses color coding to visualize how daily yield varies with module and ambient temperatures.
+
+- **3D Solar Movement Visualization with Temperature Gauges**: 
+
+This section outlines a compact implementation of a real-time dashboard that visualizes solar movement over time in 3D, alongside gauges displaying ambient and module temperatures.
+Script Summary: The gauges and line chart are updated in real-time based on simulated data:
+
+
+``` python
+def create_solar_movement_dashboard(data, latitude, longitude):
+    solpos = pvlib.solarposition.get_solarposition(data['DATE_TIME'], latitude, longitude)
+    data['solar_azimuth'], data['solar_altitude'] = solpos['azimuth'].values, solpos['apparent_elevation'].values
+    data = data[data['solar_altitude'] > 0]
+
+    dashboard = lc.Dashboard(theme=lc.Themes.Dark, rows=2, columns=3)
+    ambient_gauge = dashboard.GaugeChart(row_index=0, column_index=0).set_title('Ambient Temperature').set_interval(0, 60)
+    module_gauge = dashboard.GaugeChart(row_index=0, column_index=2).set_title('Module Temperature').set_interval(0, 60)
+    chart_solar_movement = dashboard.Chart3D(row_index=0, column_index=1).add_point_series().set_point_shape('sphere').set_point_size(10.0)
+    chart_energy = dashboard.ChartXY(row_index=1, column_index=0, column_span=3).add_line_series().set_name('AC Power')
+
+    for i, row in data.iterrows():
+        solar_series.add([row['solar_azimuth']], [row['solar_altitude']], [row['DATE_TIME'].timestamp() * 1000])
+        chart_energy.add(row['DATE_TIME'].timestamp() * 1000, row['AC_POWER'])
+        ambient_gauge.set_value(row.get('AMBIENT_TEMPERATURE', 0))
+        module_gauge.set_value(row.get('MODULE_TEMPERATURE', 0))
+        time.sleep(0.1)
+```
+
+![](Images/3D-Solar-Movement-Visualization-with-Temperature-Gauges.gif)
+
+Insights include:
+•	3D Solar Movement: The 3D chart visualizes the solar azimuth and altitude over time, effectively showing the sun's trajectory across the sky.
+•	Temperature Gauges: The gauges provide real-time feedback on ambient and module temperatures, offering insights into how temperature variations affect solar panel efficiency.
+•	Real-Time Data: The dashboard simulates real-time data streaming, providing a dynamic visualization of solar movement and corresponding energy generation.
+
 
 - **Real-Time Dashboard with Gauges**: 
 
