@@ -215,20 +215,19 @@ Insights include:
 •	3D Surface Plot shows the combined effect of module and ambient temperatures on daily yield, with clear peaks where optimal conditions are met.
 •	3D Scatter Plot uses color coding to visualize how daily yield varies with module and ambient temperatures.
 
-## 3D Solar Movement Visualization with Temperature Gauges: 
+## Real-Time Solar Movement with Energy Efficiency Gauge: 
 
-This section outlines a compact implementation of a real-time dashboard that visualizes solar movement over time in 3D, alongside gauges displaying ambient and module temperatures.
-Script Summary: The gauges and line chart are updated in real-time based on simulated data:
+This implementation showcases a real-time dashboard that visualizes solar movement in 3D, while displaying energy efficiency and module temperature using dynamic gauge.:
 
 
 ``` python
-def create_solar_movement_dashboard(data, latitude, longitude):
+def create_solar_dashboard(data, latitude, longitude):
     solpos = pvlib.solarposition.get_solarposition(data['DATE_TIME'], latitude, longitude)
     data['solar_azimuth'], data['solar_altitude'] = solpos['azimuth'].values, solpos['apparent_elevation'].values
     data = data[data['solar_altitude'] > 0]
 
     dashboard = lc.Dashboard(theme=lc.Themes.Dark, rows=2, columns=3)
-    ambient_gauge = dashboard.GaugeChart(row_index=0, column_index=0).set_title('Ambient Temperature').set_interval(0, 60)
+    efficiency_gauge = dashboard.GaugeChart(row_index=0, column_index=0).set_title('Energy Efficiency').set_interval(0, 1)
     module_gauge = dashboard.GaugeChart(row_index=0, column_index=2).set_title('Module Temperature').set_interval(0, 60)
     chart_solar_movement = dashboard.Chart3D(row_index=0, column_index=1).add_point_series().set_point_shape('sphere').set_point_size(10.0)
     chart_energy = dashboard.ChartXY(row_index=1, column_index=0, column_span=3).add_line_series().set_name('AC Power')
@@ -236,18 +235,18 @@ def create_solar_movement_dashboard(data, latitude, longitude):
     for i, row in data.iterrows():
         solar_series.add([row['solar_azimuth']], [row['solar_altitude']], [row['DATE_TIME'].timestamp() * 1000])
         chart_energy.add(row['DATE_TIME'].timestamp() * 1000, row['AC_POWER'])
-        ambient_gauge.set_value(row.get('AMBIENT_TEMPERATURE', 0))
-        module_gauge.set_value(row.get('MODULE_TEMPERATURE', 0))
-        time.sleep(0.1)
+        efficiency_gauge.set_value(row['AC_POWER'] / (row['IRRADIATION'] * 1385.42) if row['IRRADIATION'] > 0 else 0)
+        module_gauge.set_value(row['MODULE_TEMPERATURE'])
+        time.sleep(0.2)
 ```
 
-![](Images/3D-Solar-Movement-Visualization-with-Temperature-Gauges.gif)
+![](Images/Real-Time-Solar-Movement-with-Energy-Efficiency-Gauge.gif)
 
 Insights include:
-•	3D Solar Movement: The 3D chart visualizes the solar azimuth and altitude over time, effectively showing the sun's trajectory across the sky.
-•	Temperature Gauges: The gauges provide real-time feedback on ambient and module temperatures, offering insights into how temperature variations affect solar panel efficiency.
-•	Real-Time Data: The dashboard simulates real-time data streaming, providing a dynamic visualization of solar movement and corresponding energy generation.
-
+•	3D Solar Movement: The 3D chart visualizes the sun's path across the sky by plotting azimuth and altitude over time.
+•	Energy Efficiency Gauge: The gauge provides real-time feedback on the efficiency of solar panels, helping monitor performance.
+•	Module Temperature Gauge: This gauge tracks the module temperature, indicating potential impacts on energy efficiency.
+•	Real-Time Visualization: The dashboard simulates real-time data streaming, making it a powerful tool for dynamic analysis of solar energy systems.
 
 ## Real-Time Dashboard with Gauges: 
 
