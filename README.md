@@ -258,9 +258,11 @@ Script Summary: The gauges and line chart are updated in real-time based on simu
 ``` python
 def update_dashboard():
     for i in range(1000):  
+        predicted_values = []
+        time_values = []
         random_weather = generate_random_weather_data()
         predicted_power = model.predict(pd.DataFrame([random_weather]))[0]
-        line_series.add(time_values[-1], predicted_values[-1])
+        Area_series.add(time_values[-1], predicted_values[-1])
         ambient_gauge.set_value(random_weather['AMBIENT_TEMPERATURE'])
         module_gauge.set_value(random_weather['MODULE_TEMPERATURE'])
         time.sleep(0.5)
