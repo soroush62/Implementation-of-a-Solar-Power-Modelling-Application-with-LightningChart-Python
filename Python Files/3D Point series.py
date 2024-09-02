@@ -2,9 +2,7 @@ import lightningchart as lc
 import pandas as pd
 import numpy as np
 
-with open('D:/Computer Aplication/WorkPlacement/Projects/shared_variable.txt', 'r') as f:
-    mylicensekey = f.read().strip()
-lc.set_license(mylicensekey)
+lc.set_license('mylicensekey')
 
 generation_data = pd.read_csv('Dataset/Plant_2_Generation_Data.csv')
 weather_data = pd.read_csv('Dataset/Plant_2_Weather_Sensor_Data.csv')

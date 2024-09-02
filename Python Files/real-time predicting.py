@@ -5,9 +5,7 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import train_test_split
 import time
 
-with open('D:/Computer Aplication/WorkPlacement/Projects/shared_variable.txt', 'r') as f:
-    mylicensekey = f.read().strip()
-lc.set_license(mylicensekey)
+lc.set_license('mylicensekey')
 
 generation_data = pd.read_csv('Dataset/Plant_2_Generation_Data.csv')
 weather_data = pd.read_csv('Dataset/Plant_2_Weather_Sensor_Data.csv')
@@ -57,7 +55,7 @@ module_gauge.set_value_indicator_thickness(8)
 
 power_chart = dashboard.ChartXY(row_index=1, column_index=0, column_span=2, title='Predicted AC Power Over Time')
 Area_series = power_chart.add_area_series().set_name('Predicted AC Power')
-Area_series.set_fill_color(lc.Color(202, 75, 75))
+Area_series.set_fill_color(lc.Color(255, 255, 255))
 
 power_chart.get_default_x_axis().set_title('Time (Seconds)')
 power_chart.get_default_y_axis().set_title('Predicted AC Power')
