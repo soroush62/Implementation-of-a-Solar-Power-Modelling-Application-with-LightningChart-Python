@@ -56,7 +56,8 @@ module_gauge.set_bar_thickness(30)
 module_gauge.set_value_indicator_thickness(8)
 
 power_chart = dashboard.ChartXY(row_index=1, column_index=0, column_span=2, title='Predicted AC Power Over Time')
-line_series = power_chart.add_line_series().set_name('Predicted AC Power')
+Area_series = power_chart.add_area_series().set_name('Predicted AC Power')
+Area_series.set_fill_color(lc.Color(202, 75, 75))
 
 power_chart.get_default_x_axis().set_title('Time (Seconds)')
 power_chart.get_default_y_axis().set_title('Predicted AC Power')
@@ -83,7 +84,7 @@ def update_dashboard():
         predicted_values.append(predicted_power)
         time_values.append(current_time)
 
-        line_series.add(time_values[-1], predicted_values[-1])
+        Area_series.add(time_values[-1], predicted_values[-1])
 
         ambient_gauge.set_value(random_weather['AMBIENT_TEMPERATURE'])
         module_gauge.set_value(random_weather['MODULE_TEMPERATURE'])
