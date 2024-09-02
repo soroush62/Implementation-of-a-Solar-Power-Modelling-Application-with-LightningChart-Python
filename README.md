@@ -110,7 +110,9 @@ def create_scatter_chart(dashboard, title, x_values, y_values, xlabel, ylabel, c
     chart.get_default_x_axis().set_title(xlabel)
     chart.get_default_y_axis().set_title(ylabel)
 ```
+
 ![](Images/Scatter-Plots-and-Time-Series-Analysis.png)
+
 
 These scatter plots reveal the following insights:
 •	AC Power vs. Time: Displays a clear diurnal pattern with peaks around midday, indicating the correlation between sunlight availability and power output.
@@ -131,7 +133,9 @@ def add_feature_importance_to_dashboard(dashboard, model_name, importances, colu
     bar_data = [{'category': str(row['Feature']), 'value': float(row['Importance'])} for _, row in importance_df.iterrows()]
     chart.set_data(bar_data)
 ```
+
 ![](Images/Feature-Importance-Analysis.png)
+
 
 Key observations include:
 •	Irradiation consistently emerges as the most significant feature across models, emphasizing its critical role in predicting power output.
@@ -156,7 +160,9 @@ def create_density_scatter_grid(merged_data):
                 create_scatter_chart(dashboard, f'{x_col} vs {y_col}', data_dict, x_col, y_col, column_index, row_index)
     dashboard.open()
 ```
+
 ![](Images/Grid-Layout-of-Density-and-Scatter-Plots.png)
+
 
 Insights include:
 •	Density Plots: Provide an understanding of the distribution for each key variable independently, highlighting how values are spread across the dataset.
@@ -198,6 +204,7 @@ def create_3d_surface_chart(merged_data):
     chart.get_default_z_axis().set_title('AMBIENT_TEMPERATURE')
     chart.add_legend(data=surface_series)
 ```
+
 ![](Images/3D-Scatter-Plot.png)
 ![](Images/3D-Surface-Plot.gif)
 
@@ -221,6 +228,7 @@ def update_dashboard():
         module_gauge.set_value(random_weather['MODULE_TEMPERATURE'])
         time.sleep(0.5)
 ```
+
 ![](Images/Real-Time-Dashboard-with-Gauges.gif)
 
 This visualization:
