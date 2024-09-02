@@ -3,28 +3,23 @@ import pandas as pd
 import lightningchart as lc
 from scipy.stats import gaussian_kde
 
-# Set your LightningChart license key
-with open('D:/Computer Aplication/WorkPlacement/Projects/shared_variable.txt', 'r') as f:
+with open('D:/Computer Aplication/WorkPlacement/Projects/shared_variable2.txt', 'r') as f:
     mylicensekey = f.read().strip()
 lc.set_license(mylicensekey)
 
-# Load and merge data
-generation_data = pd.read_csv('D:/wenprograming23/src/team6/Implementation-of-a-Solar-Power-Modelling-Application-with-LightningChart-Python/Dataset/Plant_2_Generation_Data.csv')
-weather_data = pd.read_csv('D:/wenprograming23/src/team6/Implementation-of-a-Solar-Power-Modelling-Application-with-LightningChart-Python/Dataset/Plant_2_Weather_Sensor_Data.csv')
+generation_data = pd.read_csv('Dataset/Plant_2_Generation_Data.csv')
+weather_data = pd.read_csv('Dataset/Plant_2_Weather_Sensor_Data.csv')
 
 generation_data['DATE_TIME'] = pd.to_datetime(generation_data['DATE_TIME'])
 weather_data['DATE_TIME'] = pd.to_datetime(weather_data['DATE_TIME'])
 
 merged_data = pd.merge(generation_data, weather_data, on=['DATE_TIME', 'PLANT_ID'])
 
-# Features for pairplot
 features = ['DAILY_YIELD', 'TOTAL_YIELD', 'AMBIENT_TEMPERATURE', 'MODULE_TEMPERATURE']
 source_keys = merged_data['SOURCE_KEY_x'].unique()
 
-# Generate random colors for each SOURCE_KEY
 color_map = {key: lc.Color(np.random.randint(0, 256), np.random.randint(0, 256), np.random.randint(0, 256)) for key in source_keys}
 
-# Create a dashboard
 dashboard = lc.Dashboard(
     rows=len(features),
     columns=len(features),
@@ -37,6 +32,9 @@ def create_density_chart(dashboard, title, values_dict, column_index, row_index)
         row_index=row_index
     )
     chart.set_title(title)
+    chart.set_title_font(size=15)
+    chart.set_title_color(lc.Color(255, 255, 255))
+    chart.set_padding(0)
 
     for key, values in values_dict.items():
         values_np = np.array(values)  
@@ -58,6 +56,9 @@ def create_scatter_chart(dashboard, title, data_dict, xlabel, ylabel, column_ind
         row_index=row_index
     )
     chart.set_title(title)
+    chart.set_title_font(size=15)
+    chart.set_title_color(lc.Color(255, 255, 255))
+    chart.set_padding(0)
 
     for key, (x_values, y_values) in data_dict.items():
         scatter_series = chart.add_point_series()

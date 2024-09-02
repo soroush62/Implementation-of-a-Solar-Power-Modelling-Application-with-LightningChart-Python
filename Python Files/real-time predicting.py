@@ -9,8 +9,8 @@ with open('D:/Computer Aplication/WorkPlacement/Projects/shared_variable.txt', '
     mylicensekey = f.read().strip()
 lc.set_license(mylicensekey)
 
-generation_data = pd.read_csv('D:/wenprograming23/src/team6/Implementation-of-a-Solar-Power-Modelling-Application-with-LightningChart-Python/Dataset/Plant_2_Generation_Data.csv')
-weather_data = pd.read_csv('D:/wenprograming23/src/team6/Implementation-of-a-Solar-Power-Modelling-Application-with-LightningChart-Python/Dataset/Plant_2_Weather_Sensor_Data.csv')
+generation_data = pd.read_csv('Dataset/Plant_2_Generation_Data.csv')
+weather_data = pd.read_csv('Dataset/Plant_2_Weather_Sensor_Data.csv')
 
 generation_data['DATE_TIME'] = pd.to_datetime(generation_data['DATE_TIME'])
 weather_data['DATE_TIME'] = pd.to_datetime(weather_data['DATE_TIME'])
@@ -30,30 +30,30 @@ dashboard = lc.Dashboard(theme=lc.Themes.Dark, rows=2, columns=2)
 ambient_gauge = dashboard.GaugeChart(row_index=0, column_index=0)
 ambient_gauge.set_title('Ambient Temperature')
 ambient_gauge.set_angle_interval(start=225, end=-45)
-ambient_gauge.set_interval(start=0, end=50)
+ambient_gauge.set_interval(start=0, end=60)
 ambient_gauge.set_value_indicators([
-    {'start': 0, 'end': 10, 'color': lc.Color(0, 0, 255)},  # Blue
-    {'start': 10, 'end': 20, 'color': lc.Color(0, 255, 255)},  # Cyan
-    {'start': 20, 'end': 30, 'color': lc.Color(0, 255, 0)},  # Green
-    {'start': 30, 'end': 40, 'color': lc.Color(255, 255, 0)},  # Yellow
-    {'start': 40, 'end': 50, 'color': lc.Color(255, 0, 0)}  # Red
+    {'start': 0, 'end': 12, 'color': lc.Color(0, 0, 255)},  # Blue
+    {'start': 12, 'end': 24, 'color': lc.Color(0, 255, 255)},  # Cyan
+    {'start': 24, 'end': 36, 'color': lc.Color(0, 255, 0)},  # Green
+    {'start': 36, 'end': 48, 'color': lc.Color(255, 255, 0)},  # Yellow
+    {'start': 48, 'end': 60, 'color': lc.Color(255, 0, 0)}  # Red
 ])
-ambient_gauge.set_bar_thickness(100)
-ambient_gauge.set_value_indicator_thickness(20)
+ambient_gauge.set_bar_thickness(30)
+ambient_gauge.set_value_indicator_thickness(8)
 
 module_gauge = dashboard.GaugeChart(row_index=0, column_index=1)
 module_gauge.set_title('Module Temperature')
 module_gauge.set_angle_interval(start=225, end=-45)
-module_gauge.set_interval(start=0, end=50)
+module_gauge.set_interval(start=0, end=60)
 module_gauge.set_value_indicators([
-    {'start': 0, 'end': 10, 'color': lc.Color(0, 0, 255)},  # Blue
-    {'start': 10, 'end': 20, 'color': lc.Color(0, 255, 255)},  # Cyan
-    {'start': 20, 'end': 30, 'color': lc.Color(0, 255, 0)},  # Green
-    {'start': 30, 'end': 40, 'color': lc.Color(255, 255, 0)},  # Yellow
-    {'start': 40, 'end': 50, 'color': lc.Color(255, 0, 0)}  # Red
+    {'start': 0, 'end': 12, 'color': lc.Color(0, 0, 255)},  # Blue
+    {'start': 12, 'end': 24, 'color': lc.Color(0, 255, 255)},  # Cyan
+    {'start': 24, 'end': 36, 'color': lc.Color(0, 255, 0)},  # Green
+    {'start': 36, 'end': 48, 'color': lc.Color(255, 255, 0)},  # Yellow
+    {'start': 48, 'end': 60, 'color': lc.Color(255, 0, 0)}  # Red
 ])
-module_gauge.set_bar_thickness(100)
-module_gauge.set_value_indicator_thickness(20)
+module_gauge.set_bar_thickness(30)
+module_gauge.set_value_indicator_thickness(8)
 
 power_chart = dashboard.ChartXY(row_index=1, column_index=0, column_span=2, title='Predicted AC Power Over Time')
 line_series = power_chart.add_line_series().set_name('Predicted AC Power')
@@ -92,5 +92,3 @@ def update_dashboard():
 
 dashboard.open(live=True)
 update_dashboard()
-
-
