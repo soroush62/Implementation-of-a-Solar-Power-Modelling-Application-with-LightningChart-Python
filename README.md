@@ -42,7 +42,7 @@ LightningChart is renowned for its exceptional performance, capable of handling 
 To get started, ensure you have Python installed. Here you can see how to install the following libraries:
 
 ```bash
-pip install lightningchart==0.7.2.1
+pip install lightningchart==0.8.0
 pip install numpy pandas sklearn xgboost lightgbm catboost
 ```
 
